@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+# mongodb service
+
+  backend:
+    # to build an image based on Dockerfile
+    # it looks in this folder to find Dockerfile to build an image
+    build: .
+    ports:
+
+      - 5000:5000
+
+    # depends_on means it will start our backend container once mongo-container is  up and running.
+
+  # name is optional for our frontend
+  frontend:
+    # to build an image based on Dockerfile
+    # it looks in this folder to find Dockerfile to build an image
+    build: ./react-web
+
+    # the port that we want to publish for frontend
+    ports:
+      - "3000:3000"
+    # add bind mount volume to keep have updated source code
+    environment:
+      PORT: 3000
+    depends_on:
+      - backend
+
+# declare the volumes name that our app is using.
+
+ 
