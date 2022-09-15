@@ -1,7 +1,19 @@
 version: '3.9'
 
 services:
-# mongodb service
+  # name is optional for our mongodb
+  my_mongodb:
+    # since mongo is an offical image we can use it.
+    image: "mongo"
+
+    # the port that we want to publish for mongodb
+    ports:
+      - "27017:27017"
+
+    # our mongodb depends on volume to keep the data alive.
+    volumes:
+      - data:/data/db
+    
 
   backend:
     # to build an image based on Dockerfile
@@ -12,6 +24,8 @@ services:
       - 5000:5000
 
     # depends_on means it will start our backend container once mongo-container is  up and running.
+    depends_on:
+      - my_mongodb
 
   # name is optional for our frontend
   frontend:
@@ -25,9 +39,10 @@ services:
     # add bind mount volume to keep have updated source code
     environment:
       PORT: 3000
+
     depends_on:
       - backend
 
 # declare the volumes name that our app is using.
-
- 
+volumes:
+  data:

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import './App.css';
+import Results from "./components/Results";
 
 function App() {
   const [searchResults, setSearchResults] = useState(null);
@@ -32,7 +33,7 @@ function App() {
       <button onClick={handleSearch} >Search</button>
       <div>
         {searchResults && searchResults.map((result)=>{
-          return <li>{result.product}</li>
+          return <Results product ={result.product} description={result.description} price={result.price}></Results>
         })}
       </div>
     </div>

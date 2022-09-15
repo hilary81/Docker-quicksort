@@ -3,10 +3,11 @@ const {MongoClient} = require('mongodb')
 const app= express();
 const cors = require("cors");
 
+
 app.use(cors());
 
-const url = 'mongodb://localhost:27017';
-const dbName ="my_db-test"
+const url = 'mongodb://host.docker.internal:27017';
+const dbName ="my_db_test2"
 const client = new MongoClient(url)
 
 const quickSort=(list) =>{
@@ -17,7 +18,7 @@ const quickSort=(list) =>{
   let right =[];
 
   for (let i=1, total = list.length; i < total; i++){
-    if (list[i].quantity < pivot.quantity)
+    if (list[i].price < pivot.price)
            left.push(list[i]);
     else right.push(list[i])
   } 
@@ -28,7 +29,7 @@ async function main(quickSort){
   await client.connect();
   console.log("Connected successfully to server");
   const db = client.db(dbName);
-  const collection = db.collection('productCollection');
+  const collection = db.collection('productListCollection');
   const findResult = await collection.find({}).toArray();
 
   console.log("FOund documnet ==>",quickSort(findResult));
